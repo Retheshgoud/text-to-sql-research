@@ -1,0 +1,133 @@
+question,ground_truth_sql,generated_sql,success,error,latency,method
+List all artists.,SELECT * FROM Artist,SELECT Name FROM Artist,True,,10.938,improved
+List all albums.,SELECT * FROM Album,"SELECT AlbumId, Title, ArtistId FROM Album",True,,2.516,improved
+How many artists are there?,SELECT COUNT(*) AS total_artists FROM Artist,SELECT count(*) FROM Artist,True,,1.961,improved
+How many albums are there?,SELECT COUNT(*) AS total_albums FROM Album,SELECT count(*) FROM Album,True,,1.842,improved
+How many tracks are there?,SELECT COUNT(*) AS total_tracks FROM Track,SELECT count(*) FROM Track,True,,1.682,improved
+Show all genres.,SELECT * FROM Genre,SELECT * FROM Genre,True,,1.669,improved
+Show all media types.,SELECT * FROM MediaType,SELECT * FROM MediaType,True,,1.603,improved
+List all playlists.,SELECT * FROM Playlist,"SELECT PlaylistId, Name FROM Playlist",True,,2.106,improved
+How many customers are there?,SELECT COUNT(*) AS total_customers FROM Customer,SELECT count(*) FROM Customer,True,,1.887,improved
+How many employees are there?,SELECT COUNT(*) AS total_employees FROM Employee,SELECT count(*) FROM Employee,True,,1.8,improved
+List all customers from Brazil.,SELECT * FROM Customer WHERE Country = 'Brazil',SELECT * FROM Customer WHERE Country = 'Brazil',True,,2.529,improved
+List all customers from Germany.,SELECT * FROM Customer WHERE Country = 'Germany',SELECT * FROM Customer WHERE Country = 'Germany',True,,2.506,improved
+Show the first name and last name of all employees.,"SELECT FirstName, LastName FROM Employee","SELECT FirstName, LastName FROM Employee",True,,2.272,improved
+Find all tracks in the Rock genre.,SELECT Track.Name FROM Track JOIN Genre ON Track.GenreId = Genre.GenreId WHERE Genre.Name = 'Rock',SELECT T.Name FROM Track AS T JOIN Genre AS G ON T.GenreId = G.GenreId WHERE G.Name = 'Rock',True,,7.311,improved
+Find all tracks in the Jazz genre.,SELECT Track.Name FROM Track JOIN Genre ON Track.GenreId = Genre.GenreId WHERE Genre.Name = 'Jazz',SELECT T.Name FROM Track AS T JOIN Genre AS G ON T.GenreId = G.GenreId WHERE G.Name = 'Jazz',True,,7.095,improved
+List all albums by the artist AC/DC.,SELECT Album.Title FROM Album JOIN Artist ON Album.ArtistId = Artist.ArtistId WHERE Artist.Name = 'AC/DC',SELECT A.Title FROM Album AS A JOIN Artist AS AR ON A.ArtistId = AR.ArtistId WHERE AR.Name = 'AC/DC',True,,6.131,improved
+List all albums by the artist Metallica.,SELECT Album.Title FROM Album JOIN Artist ON Album.ArtistId = Artist.ArtistId WHERE Artist.Name = 'Metallica',SELECT T1.Title FROM Album AS T1 INNER JOIN Artist AS T2 ON T1.ArtistId = T2.ArtistId WHERE T2.Name = 'Metallica',True,,8.385,improved
+Show the total number of tracks per genre.,"SELECT Genre.Name, COUNT(Track.TrackId) AS total_tracks FROM Track JOIN Genre ON Track.GenreId = Genre.GenreId GROUP BY Genre.Name","SELECT T.GenreId, COUNT(*) AS TotalTracks FROM Track AS T JOIN Genre AS G ON T.GenreId = G.GenreId GROUP BY T.GenreId",True,,7.395,improved
+Show the total number of albums per artist.,"SELECT Artist.Name, COUNT(Album.AlbumId) AS total_albums FROM Album JOIN Artist ON Album.ArtistId = Artist.ArtistId GROUP BY Artist.Name","SELECT
+  A.ArtistId,
+  COUNT(A.AlbumId) AS TotalAlbums
+FROM Artist AS A
+JOIN Album AS AL
+  ON A.ArtistId = AL.ArtistId
+GROUP BY
+  A.ArtistId;",False,"Execution failed on sql 'SELECT
+  A.ArtistId,
+  COUNT(A.AlbumId) AS TotalAlbums
+FROM Artist AS A
+JOIN Album AS AL
+  ON A.ArtistId = AL.ArtistId
+GROUP BY
+  A.ArtistId;': (sqlite3.OperationalError) no such column: A.AlbumId
+[SQL: SELECT
+  A.ArtistId,
+  COUNT(A.AlbumId) AS TotalAlbums
+FROM Artist AS A
+JOIN Album AS AL
+  ON A.ArtistId = AL.ArtistId
+GROUP BY
+  A.ArtistId;]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",9.912,improved
+What is the most expensive track?,"SELECT Name, UnitPrice FROM Track ORDER BY UnitPrice DESC LIMIT 1","SELECT Name, UnitPrice FROM Track ORDER BY UnitPrice DESC LIMIT 1",True,,3.327,improved
+What are the top 5 longest tracks?,"SELECT Name, Milliseconds FROM Track ORDER BY Milliseconds DESC LIMIT 5","SELECT TrackId, Name
+FROM Track
+ORDER BY Milliseconds DESC
+LIMIT 5",True,,4.715,improved
+List all invoices from 2010.,"SELECT * FROM Invoice WHERE strftime('%Y', InvoiceDate) = '2010'","SELECT
+  *
+FROM Invoice
+WHERE
+  STRFTIME('%Y', InvoiceDate) = '2010';",True,,6.179,improved
+What is the total revenue from all invoices?,SELECT SUM(Total) AS total_revenue FROM Invoice,SELECT SUM(Total) FROM Invoice,True,,2.173,improved
+Which country has the most customers?,"SELECT Country, COUNT(*) AS total FROM Customer GROUP BY Country ORDER BY total DESC LIMIT 1",SELECT Country FROM Customer GROUP BY Country ORDER BY COUNT(*) DESC LIMIT 1,True,,4.091,improved
+Show all tracks in the playlist Music.,SELECT Track.Name FROM Track JOIN PlaylistTrack ON Track.TrackId = PlaylistTrack.TrackId JOIN Playlist ON PlaylistTrack.PlaylistId = Playlist.PlaylistId WHERE Playlist.Name = 'Music',SELECT T.Name FROM Track AS T JOIN PlaylistTrack AS PT ON T.TrackId = PT.TrackId JOIN Playlist AS P ON PT.PlaylistId = P.PlaylistId WHERE P.Name = 'Music',True,,8.052,improved
+Show all tracks in the playlist Movies.,SELECT Track.Name FROM Track JOIN PlaylistTrack ON Track.TrackId = PlaylistTrack.TrackId JOIN Playlist ON PlaylistTrack.PlaylistId = Playlist.PlaylistId WHERE Playlist.Name = 'Movies',SELECT T.Name FROM Track AS T INNER JOIN PlaylistTrack AS PT ON T.TrackId = PT.TrackId INNER JOIN Playlist AS P ON PT.PlaylistId = P.PlaylistId WHERE P.Name = 'Movies',True,,9.227,improved
+How many tracks are in each playlist?,"SELECT Playlist.Name, COUNT(PlaylistTrack.TrackId) AS track_count FROM Playlist JOIN PlaylistTrack ON Playlist.PlaylistId = PlaylistTrack.PlaylistId GROUP BY Playlist.Name","SELECT p.Name, COUNT(pt.TrackId) FROM Playlist AS p JOIN PlaylistTrack AS pt ON p.PlaylistId = pt.PlaylistId GROUP BY p.PlaylistId",True,,8.974,improved
+List the names of all customers who have made an invoice.,"SELECT DISTINCT Customer.FirstName, Customer.LastName FROM Customer JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId","SELECT DISTINCT FirstName, LastName FROM Customer WHERE CustomerId IN ( SELECT",False,"Execution failed on sql 'SELECT DISTINCT FirstName, LastName FROM Customer WHERE CustomerId IN ( SELECT': (sqlite3.OperationalError) incomplete input
+[SQL: SELECT DISTINCT FirstName, LastName FROM Customer WHERE CustomerId IN ( SELECT]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",6.393,improved
+What is the average invoice total?,SELECT AVG(Total) AS avg_total FROM Invoice,SELECT average(Total) FROM Invoice,False,"Execution failed on sql 'SELECT average(Total) FROM Invoice': (sqlite3.OperationalError) no such function: average
+[SQL: SELECT average(Total) FROM Invoice]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",2.245,improved
+Which employee has the most customers assigned?,"SELECT Employee.FirstName, Employee.LastName, COUNT(Customer.CustomerId) AS total FROM Employee JOIN Customer ON Employee.EmployeeId = Customer.SupportRepId GROUP BY Employee.EmployeeId ORDER BY total DESC LIMIT 1","SELECT e.FirstName, e.LastName FROM Employee AS e JOIN Customer AS c ON e.EmployeeId = c.SupportRepId GROUP BY e.EmployeeId ORDER BY COUNT(c.CustomerId) DESC LIMIT 1",True,,10.465,improved
+List all tracks composed by Angus Young.,SELECT Name FROM Track WHERE Composer = 'Angus Young',SELECT T.Name FROM Track AS T WHERE T.Composer = 'Angus Young',True,,4.948,improved
+Show the total sales per country.,"SELECT BillingCountry, SUM(Total) AS total_sales FROM Invoice GROUP BY BillingCountry ORDER BY total_sales DESC","SELECT
+  BillingCountry,
+  SUM(Total) AS TotalSales
+FROM Invoice
+GROUP BY
+  BillingCountry;",True,,5.883,improved
+How many invoices were made in each year?,"SELECT strftime('%Y', InvoiceDate) AS year, COUNT(*) AS total FROM Invoice GROUP BY year","SELECT strftime('%Y', InvoiceDate) AS InvoiceYear, COUNT(InvoiceId) AS NumberOfInvoices FROM Invoice GROUP BY InvoiceYear ORDER BY InvoiceYear",True,,8.106,improved
+Find customers who spent more than 40 dollars in total.,"SELECT Customer.FirstName, Customer.LastName, SUM(Invoice.Total) AS total_spent FROM Customer JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId GROUP BY Customer.CustomerId HAVING total_spent > 40","SELECT
+  c.FirstName,
+  c.LastName
+FROM Customer AS c
+JOIN Invoice AS i
+  ON c.CustomerId = i.CustomerId
+GROUP BY
+  c.CustomerId
+HAVING
+  SUM(i.Total) > 40;",True,,10.771,improved
+List tracks that cost more than 1 dollar.,"SELECT Name, UnitPrice FROM Track WHERE UnitPrice > 1","SELECT TrackId, Name FROM Track WHERE UnitPrice > 1",True,,3.292,improved
+Show albums that have more than 10 tracks.,"SELECT Album.Title, COUNT(Track.TrackId) AS track_count FROM Album JOIN Track ON Album.AlbumId = Track.AlbumId GROUP BY Album.AlbumId HAVING track_count > 10",SELECT T1.Title FROM Album AS T1 INNER JOIN Track AS T2 ON T1.AlbumId = T2.AlbumId GROUP BY T1.AlbumId HAVING COUNT(T2.TrackId) > 10,True,,10.694,improved
+List all artists who have more than 5 albums.,"SELECT Artist.Name, COUNT(Album.AlbumId) AS album_count FROM Artist JOIN Album ON Artist.ArtistId = Album.ArtistId GROUP BY Artist.ArtistId HAVING album_count > 5",SELECT A.Name FROM Artist AS A JOIN Album AS AL ON A.ArtistId = AL.ArtistId GROUP BY A.ArtistId HAVING COUNT(AL.AlbumId) > 5,True,,9.383,improved
+What are the unique billing countries in invoices?,SELECT DISTINCT BillingCountry FROM Invoice ORDER BY BillingCountry,SELECT DISTINCT BillingCountry FROM Invoice,True,,2.169,improved
+Show the top 10 customers by total spending.,"SELECT Customer.FirstName, Customer.LastName, SUM(Invoice.Total) AS total_spent FROM Customer JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId GROUP BY Customer.CustomerId ORDER BY total_spent DESC LIMIT 10","SELECT
+  c.FirstName,
+  c.LastName,
+  SUM(il.UnitPrice * il.Quantity) AS TotalSpending
+FROM Customer AS c
+JOIN Invoice AS i
+  ON c.CustomerId = i.CustomerId
+JOIN InvoiceLine AS il
+  ON i.InvoiceId = il.InvoiceId
+GROUP BY
+  c.CustomerId,
+  c.FirstName,
+  c.LastName
+ORDER BY
+  TotalSpending DESC
+LIMIT 10",True,,17.58,improved
+Find all tracks that have never been sold.,SELECT Track.Name FROM Track WHERE Track.TrackId NOT IN (SELECT TrackId FROM InvoiceLine),"SELECT T.TrackId, T.Name FROM Track AS T WHERE T.TrackId NOT IN (SELECT InvoiceLine.TrackId FROM InvoiceLine)",True,,6.39,improved
+What is the most popular genre by number of tracks sold?,"SELECT Genre.Name, COUNT(InvoiceLine.TrackId) AS total_sold FROM InvoiceLine JOIN Track ON InvoiceLine.TrackId = Track.TrackId JOIN Genre ON Track.GenreId = Genre.GenreId GROUP BY Genre.Name ORDER BY total_sold DESC LIMIT 1","SELECT
+  T.GenreId,
+  COUNT(T.TrackId) AS TrackCount
+FROM Track AS T
+GROUP BY
+  T.GenreId
+ORDER BY
+  TrackCount DESC
+LIMIT 1",True,,9.176,improved
+Show the total revenue per genre.,"SELECT Genre.Name, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) AS revenue FROM InvoiceLine JOIN Track ON InvoiceLine.TrackId = Track.TrackId JOIN Genre ON Track.GenreId = Genre.GenreId GROUP BY Genre.Name ORDER BY revenue DESC","SELECT g.Name, SUM(tl.UnitPrice * tl.Quantity) AS TotalRevenue FROM Genre AS g JOIN Track AS t ON g.GenreId = t.GenreId JOIN InvoiceLine AS tl ON t.TrackId = tl.TrackId GROUP BY g.Name ORDER BY TotalRevenue DESC",True,,14.217,improved
+List all tracks from the album Nevermind.,SELECT Track.Name FROM Track JOIN Album ON Track.AlbumId = Album.AlbumId WHERE Album.Title = 'Nevermind',SELECT T.Name FROM Track AS T JOIN Album AS A ON T.AlbumId = A.AlbumId WHERE A.Title = 'Nevermind',True,,7.884,improved
+Which artist has the most tracks?,"SELECT Artist.Name, COUNT(Track.TrackId) AS total_tracks FROM Artist JOIN Album ON Artist.ArtistId = Album.ArtistId JOIN Track ON Album.AlbumId = Track.AlbumId GROUP BY Artist.ArtistId ORDER BY total_tracks DESC LIMIT 1","SELECT T1.ArtistId, COUNT(T1.TrackId) FROM Track AS T1 GROUP BY T1.ArtistId ORDER BY COUNT(T1.TrackId) DESC LIMIT 1",False,"Execution failed on sql 'SELECT T1.ArtistId, COUNT(T1.TrackId) FROM Track AS T1 GROUP BY T1.ArtistId ORDER BY COUNT(T1.TrackId) DESC LIMIT 1': (sqlite3.OperationalError) no such column: T1.ArtistId
+[SQL: SELECT T1.ArtistId, COUNT(T1.TrackId) FROM Track AS T1 GROUP BY T1.ArtistId ORDER BY COUNT(T1.TrackId) DESC LIMIT 1]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",10.372,improved
+Show all customers in alphabetical order by last name.,"SELECT FirstName, LastName FROM Customer ORDER BY LastName ASC",SELECT * FROM Customer ORDER BY LastName,True,,2.859,improved
+List all employees hired after the year 2003.,"SELECT FirstName, LastName, HireDate FROM Employee WHERE strftime('%Y', HireDate) > '2003'","SELECT LastName, FirstName, Title, ReportsTo, BirthDate, HireDate FROM Employee WHERE HireDate > '2003-01-01'",True,,6.902,improved
+What is the average track length in minutes?,SELECT AVG(Milliseconds) / 60000.0 AS avg_length_minutes FROM Track,SELECT CAST(AVG(Milliseconds / 1000.0) AS REAL) FROM Track,True,,4.376,improved
+Which album has the most tracks?,"SELECT Album.Title, COUNT(Track.TrackId) AS track_count FROM Album JOIN Track ON Album.AlbumId = Track.AlbumId GROUP BY Album.AlbumId ORDER BY track_count DESC LIMIT 1","SELECT
+  T1.Title
+FROM Album AS T1
+INNER JOIN Track AS T2
+  ON T1.AlbumId = T2.AlbumId
+GROUP BY
+  T1.AlbumId
+ORDER BY
+  COUNT(T2.TrackId) DESC
+LIMIT 1",True,,12.311,improved
+Show all invoice line items for invoice ID 1.,SELECT * FROM InvoiceLine WHERE InvoiceId = 1,SELECT * FROM InvoiceLine WHERE InvoiceId = 1,True,,3.687,improved
+List all tracks available in MP3 format.,SELECT Track.Name FROM Track JOIN MediaType ON Track.MediaTypeId = MediaType.MediaTypeId WHERE MediaType.Name = 'MPEG audio file',SELECT DISTINCT T.Name FROM Track AS T INNER JOIN MediaType AS MT ON T.MediaTypeId = MT.MediaTypeId WHERE MT.Name = 'MP3',True,,8.186,improved

@@ -1,0 +1,199 @@
+question,ground_truth_sql,generated_sql,success,error,latency,method
+List all artists.,SELECT * FROM Artist,SELECT artist_name FROM artists,False,"Execution failed on sql 'SELECT artist_name FROM artists': (sqlite3.OperationalError) no such table: artists
+[SQL: SELECT artist_name FROM artists]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",1.847,baseline
+List all albums.,SELECT * FROM Album,SELECT * FROM albums,False,"Execution failed on sql 'SELECT * FROM albums': (sqlite3.OperationalError) no such table: albums
+[SQL: SELECT * FROM albums]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",1.477,baseline
+How many artists are there?,SELECT COUNT(*) AS total_artists FROM Artist,SELECT COUNT(*) FROM artists,False,"Execution failed on sql 'SELECT COUNT(*) FROM artists': (sqlite3.OperationalError) no such table: artists
+[SQL: SELECT COUNT(*) FROM artists]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",1.721,baseline
+How many albums are there?,SELECT COUNT(*) AS total_albums FROM Album,SELECT count(*) FROM albums,False,"Execution failed on sql 'SELECT count(*) FROM albums': (sqlite3.OperationalError) no such table: albums
+[SQL: SELECT count(*) FROM albums]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",1.737,baseline
+How many tracks are there?,SELECT COUNT(*) AS total_tracks FROM Track,SELECT COUNT(*) FROM tracks,False,"Execution failed on sql 'SELECT COUNT(*) FROM tracks': (sqlite3.OperationalError) no such table: tracks
+[SQL: SELECT COUNT(*) FROM tracks]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",1.717,baseline
+Show all genres.,SELECT * FROM Genre,SELECT DISTINCT genre FROM movies,False,"Execution failed on sql 'SELECT DISTINCT genre FROM movies': (sqlite3.OperationalError) no such table: movies
+[SQL: SELECT DISTINCT genre FROM movies]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",1.681,baseline
+Show all media types.,SELECT * FROM MediaType,SELECT DISTINCT media_type FROM media,False,"Execution failed on sql 'SELECT DISTINCT media_type FROM media': (sqlite3.OperationalError) no such table: media
+[SQL: SELECT DISTINCT media_type FROM media]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",1.975,baseline
+List all playlists.,SELECT * FROM Playlist,SELECT * FROM playlists;,False,"Execution failed on sql 'SELECT * FROM playlists;': (sqlite3.OperationalError) no such table: playlists
+[SQL: SELECT * FROM playlists;]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",1.749,baseline
+How many customers are there?,SELECT COUNT(*) AS total_customers FROM Customer,SELECT count(*) FROM customers,False,"Execution failed on sql 'SELECT count(*) FROM customers': (sqlite3.OperationalError) no such table: customers
+[SQL: SELECT count(*) FROM customers]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",1.969,baseline
+How many employees are there?,SELECT COUNT(*) AS total_employees FROM Employee,SELECT COUNT(*) FROM employees,False,"Execution failed on sql 'SELECT COUNT(*) FROM employees': (sqlite3.OperationalError) no such table: employees
+[SQL: SELECT COUNT(*) FROM employees]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",1.711,baseline
+List all customers from Brazil.,SELECT * FROM Customer WHERE Country = 'Brazil',SELECT * FROM Customers WHERE Country = 'Brazil',False,"Execution failed on sql 'SELECT * FROM Customers WHERE Country = 'Brazil'': (sqlite3.OperationalError) no such table: Customers
+[SQL: SELECT * FROM Customers WHERE Country = 'Brazil']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",2.675,baseline
+List all customers from Germany.,SELECT * FROM Customer WHERE Country = 'Germany',SELECT * FROM Customers WHERE Country = 'Germany',False,"Execution failed on sql 'SELECT * FROM Customers WHERE Country = 'Germany'': (sqlite3.OperationalError) no such table: Customers
+[SQL: SELECT * FROM Customers WHERE Country = 'Germany']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",2.45,baseline
+Show the first name and last name of all employees.,"SELECT FirstName, LastName FROM Employee","SELECT first_name, last_name FROM employees",False,"Execution failed on sql 'SELECT first_name, last_name FROM employees': (sqlite3.OperationalError) no such table: employees
+[SQL: SELECT first_name, last_name FROM employees]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",2.781,baseline
+Find all tracks in the Rock genre.,SELECT Track.Name FROM Track JOIN Genre ON Track.GenreId = Genre.GenreId WHERE Genre.Name = 'Rock',SELECT * FROM Playlists WHERE genre = 'Rock',False,"Execution failed on sql 'SELECT * FROM Playlists WHERE genre = 'Rock'': (sqlite3.OperationalError) no such table: Playlists
+[SQL: SELECT * FROM Playlists WHERE genre = 'Rock']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",2.872,baseline
+Find all tracks in the Jazz genre.,SELECT Track.Name FROM Track JOIN Genre ON Track.GenreId = Genre.GenreId WHERE Genre.Name = 'Jazz',SELECT * FROM Playlists WHERE genre = 'Jazz',False,"Execution failed on sql 'SELECT * FROM Playlists WHERE genre = 'Jazz'': (sqlite3.OperationalError) no such table: Playlists
+[SQL: SELECT * FROM Playlists WHERE genre = 'Jazz']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",2.8,baseline
+List all albums by the artist AC/DC.,SELECT Album.Title FROM Album JOIN Artist ON Album.ArtistId = Artist.ArtistId WHERE Artist.Name = 'AC/DC',SELECT * FROM albums WHERE artist = 'AC/DC';,False,"Execution failed on sql 'SELECT * FROM albums WHERE artist = 'AC/DC';': (sqlite3.OperationalError) no such table: albums
+[SQL: SELECT * FROM albums WHERE artist = 'AC/DC';]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",3.071,baseline
+List all albums by the artist Metallica.,SELECT Album.Title FROM Album JOIN Artist ON Album.ArtistId = Artist.ArtistId WHERE Artist.Name = 'Metallica',SELECT * FROM albums WHERE artist = 'Metallica';,False,"Execution failed on sql 'SELECT * FROM albums WHERE artist = 'Metallica';': (sqlite3.OperationalError) no such table: albums
+[SQL: SELECT * FROM albums WHERE artist = 'Metallica';]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",2.764,baseline
+Show the total number of tracks per genre.,"SELECT Genre.Name, COUNT(Track.TrackId) AS total_tracks FROM Track JOIN Genre ON Track.GenreId = Genre.GenreId GROUP BY Genre.Name","SELECT genre, COUNT(*) AS total_tracks FROM tracks GROUP BY genre;",False,"Execution failed on sql 'SELECT genre, COUNT(*) AS total_tracks FROM tracks GROUP BY genre;': (sqlite3.OperationalError) no such table: tracks
+[SQL: SELECT genre, COUNT(*) AS total_tracks FROM tracks GROUP BY genre;]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",3.542,baseline
+Show the total number of albums per artist.,"SELECT Artist.Name, COUNT(Album.AlbumId) AS total_albums FROM Album JOIN Artist ON Album.ArtistId = Artist.ArtistId GROUP BY Artist.Name","ite
+SELECT artist, COUNT(*) AS total_albums FROM albums GROUP BY artist;",False,"Execution failed on sql 'ite
+SELECT artist, COUNT(*) AS total_albums FROM albums GROUP BY artist;': (sqlite3.OperationalError) near ""ite"": syntax error
+[SQL: ite
+SELECT artist, COUNT(*) AS total_albums FROM albums GROUP BY artist;]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",4.291,baseline
+What is the most expensive track?,"SELECT Name, UnitPrice FROM Track ORDER BY UnitPrice DESC LIMIT 1",SELECT name FROM tracks ORDER BY price DESC LIMIT 1,False,"Execution failed on sql 'SELECT name FROM tracks ORDER BY price DESC LIMIT 1': (sqlite3.OperationalError) no such table: tracks
+[SQL: SELECT name FROM tracks ORDER BY price DESC LIMIT 1]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",2.911,baseline
+What are the top 5 longest tracks?,"SELECT Name, Milliseconds FROM Track ORDER BY Milliseconds DESC LIMIT 5","ite
+SELECT * FROM tracks ORDER BY duration DESC LIMIT 5",False,"Execution failed on sql 'ite
+SELECT * FROM tracks ORDER BY duration DESC LIMIT 5': (sqlite3.OperationalError) near ""ite"": syntax error
+[SQL: ite
+SELECT * FROM tracks ORDER BY duration DESC LIMIT 5]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",3.645,baseline
+List all invoices from 2010.,"SELECT * FROM Invoice WHERE strftime('%Y', InvoiceDate) = '2010'","ite
+SELECT * FROM invoices WHERE strftime('%Y', invoice_date) = '2010'",False,"Execution failed on sql 'ite
+SELECT * FROM invoices WHERE strftime('%Y', invoice_date) = '2010'': (sqlite3.OperationalError) near ""ite"": syntax error
+[SQL: ite
+SELECT * FROM invoices WHERE strftime('%Y', invoice_date) = '2010']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",5.144,baseline
+What is the total revenue from all invoices?,SELECT SUM(Total) AS total_revenue FROM Invoice,SELECT SUM(amount) FROM invoices,False,"Execution failed on sql 'SELECT SUM(amount) FROM invoices': (sqlite3.OperationalError) no such table: invoices
+[SQL: SELECT SUM(amount) FROM invoices]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",2.322,baseline
+Which country has the most customers?,"SELECT Country, COUNT(*) AS total FROM Customer GROUP BY Country ORDER BY total DESC LIMIT 1","ite
+SELECT country FROM Customers GROUP BY country ORDER BY COUNT(*) DESC LIMIT 1",False,"Execution failed on sql 'ite
+SELECT country FROM Customers GROUP BY country ORDER BY COUNT(*) DESC LIMIT 1': (sqlite3.OperationalError) near ""ite"": syntax error
+[SQL: ite
+SELECT country FROM Customers GROUP BY country ORDER BY COUNT(*) DESC LIMIT 1]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",4.113,baseline
+Show all tracks in the playlist Music.,SELECT Track.Name FROM Track JOIN PlaylistTrack ON Track.TrackId = PlaylistTrack.TrackId JOIN Playlist ON PlaylistTrack.PlaylistId = Playlist.PlaylistId WHERE Playlist.Name = 'Music',SELECT * FROM Music,False,"Execution failed on sql 'SELECT * FROM Music': (sqlite3.OperationalError) no such table: Music
+[SQL: SELECT * FROM Music]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",1.986,baseline
+Show all tracks in the playlist Movies.,SELECT Track.Name FROM Track JOIN PlaylistTrack ON Track.TrackId = PlaylistTrack.TrackId JOIN Playlist ON PlaylistTrack.PlaylistId = Playlist.PlaylistId WHERE Playlist.Name = 'Movies',SELECT * FROM Tracks WHERE playlist = 'Movies',False,"Execution failed on sql 'SELECT * FROM Tracks WHERE playlist = 'Movies'': (sqlite3.OperationalError) no such table: Tracks
+[SQL: SELECT * FROM Tracks WHERE playlist = 'Movies']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",16.261,baseline
+How many tracks are in each playlist?,"SELECT Playlist.Name, COUNT(PlaylistTrack.TrackId) AS track_count FROM Playlist JOIN PlaylistTrack ON Playlist.PlaylistId = PlaylistTrack.PlaylistId GROUP BY Playlist.Name","SELECT
+  playlist_id,
+  COUNT(track_id)
+FROM playlist_tracks
+GROUP BY
+  playlist_id;",False,"Execution failed on sql 'SELECT
+  playlist_id,
+  COUNT(track_id)
+FROM playlist_tracks
+GROUP BY
+  playlist_id;': (sqlite3.OperationalError) no such table: playlist_tracks
+[SQL: SELECT
+  playlist_id,
+  COUNT(track_id)
+FROM playlist_tracks
+GROUP BY
+  playlist_id;]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",6.015,baseline
+List the names of all customers who have made an invoice.,"SELECT DISTINCT Customer.FirstName, Customer.LastName FROM Customer JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId",SELECT customer_name FROM customers WHERE customer_id IN (SELECT customer_id FROM invoices);,False,"Execution failed on sql 'SELECT customer_name FROM customers WHERE customer_id IN (SELECT customer_id FROM invoices);': (sqlite3.OperationalError) no such table: customers
+[SQL: SELECT customer_name FROM customers WHERE customer_id IN (SELECT customer_id FROM invoices);]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",4.476,baseline
+What is the average invoice total?,SELECT AVG(Total) AS avg_total FROM Invoice,SELECT AVG(total) FROM invoices,False,"Execution failed on sql 'SELECT AVG(total) FROM invoices': (sqlite3.OperationalError) no such table: invoices
+[SQL: SELECT AVG(total) FROM invoices]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",2.261,baseline
+Which employee has the most customers assigned?,"SELECT Employee.FirstName, Employee.LastName, COUNT(Customer.CustomerId) AS total FROM Employee JOIN Customer ON Employee.EmployeeId = Customer.SupportRepId GROUP BY Employee.EmployeeId ORDER BY total DESC LIMIT 1","ite
+SELECT employee_id FROM employees JOIN assignments ON employees.id = assignments.employee_id GROUP BY employee_id ORDER BY COUNT(*) DESC LIMIT 1",False,"Execution failed on sql 'ite
+SELECT employee_id FROM employees JOIN assignments ON employees.id = assignments.employee_id GROUP BY employee_id ORDER BY COUNT(*) DESC LIMIT 1': (sqlite3.OperationalError) near ""ite"": syntax error
+[SQL: ite
+SELECT employee_id FROM employees JOIN assignments ON employees.id = assignments.employee_id GROUP BY employee_id ORDER BY COUNT(*) DESC LIMIT 1]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",6.875,baseline
+List all tracks composed by Angus Young.,SELECT Name FROM Track WHERE Composer = 'Angus Young',"ite
+SELECT name FROM artists WHERE artist_name = 'Angus Young'",False,"Execution failed on sql 'ite
+SELECT name FROM artists WHERE artist_name = 'Angus Young'': (sqlite3.OperationalError) near ""ite"": syntax error
+[SQL: ite
+SELECT name FROM artists WHERE artist_name = 'Angus Young']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",4.03,baseline
+Show the total sales per country.,"SELECT BillingCountry, SUM(Total) AS total_sales FROM Invoice GROUP BY BillingCountry ORDER BY total_sales DESC","SELECT country, SUM(sales) FROM sales_table GROUP BY country;",False,"Execution failed on sql 'SELECT country, SUM(sales) FROM sales_table GROUP BY country;': (sqlite3.OperationalError) no such table: sales_table
+[SQL: SELECT country, SUM(sales) FROM sales_table GROUP BY country;]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",3.593,baseline
+How many invoices were made in each year?,"SELECT strftime('%Y', InvoiceDate) AS year, COUNT(*) AS total FROM Invoice GROUP BY year","SELECT strftime('%Y', invoice_date) AS year, COUNT(*) FROM invoices GROUP BY year;",False,"Execution failed on sql 'SELECT strftime('%Y', invoice_date) AS year, COUNT(*) FROM invoices GROUP BY year;': (sqlite3.OperationalError) no such table: invoices
+[SQL: SELECT strftime('%Y', invoice_date) AS year, COUNT(*) FROM invoices GROUP BY year;]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",4.666,baseline
+Find customers who spent more than 40 dollars in total.,"SELECT Customer.FirstName, Customer.LastName, SUM(Invoice.Total) AS total_spent FROM Customer JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId GROUP BY Customer.CustomerId HAVING total_spent > 40",SELECT customer_id FROM orders GROUP BY customer_id HAVING SUM(amount) > 40,False,"Execution failed on sql 'SELECT customer_id FROM orders GROUP BY customer_id HAVING SUM(amount) > 40': (sqlite3.OperationalError) no such table: orders
+[SQL: SELECT customer_id FROM orders GROUP BY customer_id HAVING SUM(amount) > 40]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",4.453,baseline
+List tracks that cost more than 1 dollar.,"SELECT Name, UnitPrice FROM Track WHERE UnitPrice > 1",SELECT * FROM Tracks WHERE Price > 1,False,"Execution failed on sql 'SELECT * FROM Tracks WHERE Price > 1': (sqlite3.OperationalError) no such table: Tracks
+[SQL: SELECT * FROM Tracks WHERE Price > 1]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",2.655,baseline
+Show albums that have more than 10 tracks.,"SELECT Album.Title, COUNT(Track.TrackId) AS track_count FROM Album JOIN Track ON Album.AlbumId = Track.AlbumId GROUP BY Album.AlbumId HAVING track_count > 10","ite
+SELECT name FROM albums WHERE tracks > 10",False,"Execution failed on sql 'ite
+SELECT name FROM albums WHERE tracks > 10': (sqlite3.OperationalError) near ""ite"": syntax error
+[SQL: ite
+SELECT name FROM albums WHERE tracks > 10]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",3.534,baseline
+List all artists who have more than 5 albums.,"SELECT Artist.Name, COUNT(Album.AlbumId) AS album_count FROM Artist JOIN Album ON Artist.ArtistId = Album.ArtistId GROUP BY Artist.ArtistId HAVING album_count > 5",SELECT artist_name FROM albums WHERE artist_id IN (SELECT artist_id FROM albums GROUP BY artist_id HAVING COUNT(*) > 5),False,"Execution failed on sql 'SELECT artist_name FROM albums WHERE artist_id IN (SELECT artist_id FROM albums GROUP BY artist_id HAVING COUNT(*) > 5)': (sqlite3.OperationalError) no such table: albums
+[SQL: SELECT artist_name FROM albums WHERE artist_id IN (SELECT artist_id FROM albums GROUP BY artist_id HAVING COUNT(*) > 5)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",6.066,baseline
+What are the unique billing countries in invoices?,SELECT DISTINCT BillingCountry FROM Invoice ORDER BY BillingCountry,SELECT DISTINCT billing_country FROM invoices,False,"Execution failed on sql 'SELECT DISTINCT billing_country FROM invoices': (sqlite3.OperationalError) no such table: invoices
+[SQL: SELECT DISTINCT billing_country FROM invoices]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",2.283,baseline
+Show the top 10 customers by total spending.,"SELECT Customer.FirstName, Customer.LastName, SUM(Invoice.Total) AS total_spent FROM Customer JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId GROUP BY Customer.CustomerId ORDER BY total_spent DESC LIMIT 10","ite
+SELECT customer_id, SUM(amount) AS total_spending FROM orders GROUP BY customer_id ORDER BY total_spending DESC LIMIT 10;",False,"Execution failed on sql 'ite
+SELECT customer_id, SUM(amount) AS total_spending FROM orders GROUP BY customer_id ORDER BY total_spending DESC LIMIT 10;': (sqlite3.OperationalError) near ""ite"": syntax error
+[SQL: ite
+SELECT customer_id, SUM(amount) AS total_spending FROM orders GROUP BY customer_id ORDER BY total_spending DESC LIMIT 10;]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",6.686,baseline
+Find all tracks that have never been sold.,SELECT Track.Name FROM Track WHERE Track.TrackId NOT IN (SELECT TrackId FROM InvoiceLine),SELECT * FROM PlayCount WHERE Sold = 0,False,"Execution failed on sql 'SELECT * FROM PlayCount WHERE Sold = 0': (sqlite3.OperationalError) no such table: PlayCount
+[SQL: SELECT * FROM PlayCount WHERE Sold = 0]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",2.746,baseline
+What is the most popular genre by number of tracks sold?,"SELECT Genre.Name, COUNT(InvoiceLine.TrackId) AS total_sold FROM InvoiceLine JOIN Track ON InvoiceLine.TrackId = Track.TrackId JOIN Genre ON Track.GenreId = Genre.GenreId GROUP BY Genre.Name ORDER BY total_sold DESC LIMIT 1","ite
+SELECT genre FROM music WHERE genre IN (SELECT genre FROM music GROUP BY genre ORDER BY COUNT(*) DESC LIMIT 1)",False,"Execution failed on sql 'ite
+SELECT genre FROM music WHERE genre IN (SELECT genre FROM music GROUP BY genre ORDER BY COUNT(*) DESC LIMIT 1)': (sqlite3.OperationalError) near ""ite"": syntax error
+[SQL: ite
+SELECT genre FROM music WHERE genre IN (SELECT genre FROM music GROUP BY genre ORDER BY COUNT(*) DESC LIMIT 1)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",5.597,baseline
+Show the total revenue per genre.,"SELECT Genre.Name, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) AS revenue FROM InvoiceLine JOIN Track ON InvoiceLine.TrackId = Track.TrackId JOIN Genre ON Track.GenreId = Genre.GenreId GROUP BY Genre.Name ORDER BY revenue DESC","SELECT genre, SUM(price * quantity) AS total_revenue FROM products GROUP BY genre;",False,"Execution failed on sql 'SELECT genre, SUM(price * quantity) AS total_revenue FROM products GROUP BY genre;': (sqlite3.OperationalError) no such table: products
+[SQL: SELECT genre, SUM(price * quantity) AS total_revenue FROM products GROUP BY genre;]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",4.034,baseline
+List all tracks from the album Nevermind.,SELECT Track.Name FROM Track JOIN Album ON Track.AlbumId = Album.AlbumId WHERE Album.Title = 'Nevermind',"SELECT name FROM sqlite_master WHERE type='table' AND name='tracks';
+SELECT * FROM tracks WHERE album = 'Nevermind';",False,"Execution failed on sql 'SELECT name FROM sqlite_master WHERE type='table' AND name='tracks';
+SELECT * FROM tracks WHERE album = 'Nevermind';': (sqlite3.ProgrammingError) You can only execute one statement at a time.
+[SQL: SELECT name FROM sqlite_master WHERE type='table' AND name='tracks';
+SELECT * FROM tracks WHERE album = 'Nevermind';]
+(Background on this error at: https://sqlalche.me/e/20/f405)",5.506,baseline
+Which artist has the most tracks?,"SELECT Artist.Name, COUNT(Track.TrackId) AS total_tracks FROM Artist JOIN Album ON Artist.ArtistId = Album.ArtistId JOIN Track ON Album.AlbumId = Track.AlbumId GROUP BY Artist.ArtistId ORDER BY total_tracks DESC LIMIT 1",SELECT artist FROM tracks GROUP BY artist ORDER BY COUNT(*) DESC LIMIT 1;,False,"Execution failed on sql 'SELECT artist FROM tracks GROUP BY artist ORDER BY COUNT(*) DESC LIMIT 1;': (sqlite3.OperationalError) no such table: tracks
+[SQL: SELECT artist FROM tracks GROUP BY artist ORDER BY COUNT(*) DESC LIMIT 1;]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",3.582,baseline
+Show all customers in alphabetical order by last name.,"SELECT FirstName, LastName FROM Customer ORDER BY LastName ASC",SELECT * FROM Customers ORDER BY last_name;,False,"Execution failed on sql 'SELECT * FROM Customers ORDER BY last_name;': (sqlite3.OperationalError) no such table: Customers
+[SQL: SELECT * FROM Customers ORDER BY last_name;]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",2.621,baseline
+List all employees hired after the year 2003.,"SELECT FirstName, LastName, HireDate FROM Employee WHERE strftime('%Y', HireDate) > '2003'",SELECT * FROM Employees WHERE hire_date > '2003-12-31',False,"Execution failed on sql 'SELECT * FROM Employees WHERE hire_date > '2003-12-31'': (sqlite3.OperationalError) no such table: Employees
+[SQL: SELECT * FROM Employees WHERE hire_date > '2003-12-31']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",4.591,baseline
+What is the average track length in minutes?,SELECT AVG(Milliseconds) / 60000.0 AS avg_length_minutes FROM Track,SELECT AVG(track_length) FROM tracks,False,"Execution failed on sql 'SELECT AVG(track_length) FROM tracks': (sqlite3.OperationalError) no such table: tracks
+[SQL: SELECT AVG(track_length) FROM tracks]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",2.581,baseline
+Which album has the most tracks?,"SELECT Album.Title, COUNT(Track.TrackId) AS track_count FROM Album JOIN Track ON Album.AlbumId = Track.AlbumId GROUP BY Album.AlbumId ORDER BY track_count DESC LIMIT 1",SELECT album FROM disk WHERE album_id = (SELECT album_id FROM disk GROUP BY album ORDER BY num_tracks DESC LIMIT 1);,False,"Execution failed on sql 'SELECT album FROM disk WHERE album_id = (SELECT album_id FROM disk GROUP BY album ORDER BY num_tracks DESC LIMIT 1);': (sqlite3.OperationalError) no such table: disk
+[SQL: SELECT album FROM disk WHERE album_id = (SELECT album_id FROM disk GROUP BY album ORDER BY num_tracks DESC LIMIT 1);]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",5.6,baseline
+Show all invoice line items for invoice ID 1.,SELECT * FROM InvoiceLine WHERE InvoiceId = 1,SELECT * FROM invoice_line_items WHERE invoice_id = 1,False,"Execution failed on sql 'SELECT * FROM invoice_line_items WHERE invoice_id = 1': (sqlite3.OperationalError) no such table: invoice_line_items
+[SQL: SELECT * FROM invoice_line_items WHERE invoice_id = 1]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",3.564,baseline
+List all tracks available in MP3 format.,SELECT Track.Name FROM Track JOIN MediaType ON Track.MediaTypeId = MediaType.MediaTypeId WHERE MediaType.Name = 'MPEG audio file',"ite
+SELECT * FROM Tracks WHERE file_type = 'MP3'",False,"Execution failed on sql 'ite
+SELECT * FROM Tracks WHERE file_type = 'MP3'': (sqlite3.OperationalError) near ""ite"": syntax error
+[SQL: ite
+SELECT * FROM Tracks WHERE file_type = 'MP3']
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",3.809,baseline

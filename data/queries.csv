@@ -1,0 +1,51 @@
+question,ground_truth_sql
+List all artists.,SELECT * FROM Artist
+List all albums.,SELECT * FROM Album
+How many artists are there?,SELECT COUNT(*) AS total_artists FROM Artist
+How many albums are there?,SELECT COUNT(*) AS total_albums FROM Album
+How many tracks are there?,SELECT COUNT(*) AS total_tracks FROM Track
+Show all genres.,SELECT * FROM Genre
+Show all media types.,SELECT * FROM MediaType
+List all playlists.,SELECT * FROM Playlist
+How many customers are there?,SELECT COUNT(*) AS total_customers FROM Customer
+How many employees are there?,SELECT COUNT(*) AS total_employees FROM Employee
+List all customers from Brazil.,SELECT * FROM Customer WHERE Country = 'Brazil'
+List all customers from Germany.,SELECT * FROM Customer WHERE Country = 'Germany'
+Show the first name and last name of all employees.,"SELECT FirstName, LastName FROM Employee"
+Find all tracks in the Rock genre.,"SELECT Track.Name FROM Track JOIN Genre ON Track.GenreId = Genre.GenreId WHERE Genre.Name = 'Rock'"
+Find all tracks in the Jazz genre.,"SELECT Track.Name FROM Track JOIN Genre ON Track.GenreId = Genre.GenreId WHERE Genre.Name = 'Jazz'"
+List all albums by the artist AC/DC.,"SELECT Album.Title FROM Album JOIN Artist ON Album.ArtistId = Artist.ArtistId WHERE Artist.Name = 'AC/DC'"
+List all albums by the artist Metallica.,"SELECT Album.Title FROM Album JOIN Artist ON Album.ArtistId = Artist.ArtistId WHERE Artist.Name = 'Metallica'"
+Show the total number of tracks per genre.,"SELECT Genre.Name, COUNT(Track.TrackId) AS total_tracks FROM Track JOIN Genre ON Track.GenreId = Genre.GenreId GROUP BY Genre.Name"
+Show the total number of albums per artist.,"SELECT Artist.Name, COUNT(Album.AlbumId) AS total_albums FROM Album JOIN Artist ON Album.ArtistId = Artist.ArtistId GROUP BY Artist.Name"
+What is the most expensive track?,"SELECT Name, UnitPrice FROM Track ORDER BY UnitPrice DESC LIMIT 1"
+What are the top 5 longest tracks?,"SELECT Name, Milliseconds FROM Track ORDER BY Milliseconds DESC LIMIT 5"
+List all invoices from 2010.,SELECT * FROM Invoice WHERE strftime('%Y', InvoiceDate) = '2010'
+What is the total revenue from all invoices?,SELECT SUM(Total) AS total_revenue FROM Invoice
+Which country has the most customers?,"SELECT Country, COUNT(*) AS total FROM Customer GROUP BY Country ORDER BY total DESC LIMIT 1"
+Show all tracks in the playlist Music.,"SELECT Track.Name FROM Track JOIN PlaylistTrack ON Track.TrackId = PlaylistTrack.TrackId JOIN Playlist ON PlaylistTrack.PlaylistId = Playlist.PlaylistId WHERE Playlist.Name = 'Music'"
+Show all tracks in the playlist Movies.,"SELECT Track.Name FROM Track JOIN PlaylistTrack ON Track.TrackId = PlaylistTrack.TrackId JOIN Playlist ON PlaylistTrack.PlaylistId = Playlist.PlaylistId WHERE Playlist.Name = 'Movies'"
+How many tracks are in each playlist?,"SELECT Playlist.Name, COUNT(PlaylistTrack.TrackId) AS track_count FROM Playlist JOIN PlaylistTrack ON Playlist.PlaylistId = PlaylistTrack.PlaylistId GROUP BY Playlist.Name"
+List the names of all customers who have made an invoice.,"SELECT DISTINCT Customer.FirstName, Customer.LastName FROM Customer JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId"
+What is the average invoice total?,SELECT AVG(Total) AS avg_total FROM Invoice
+Which employee has the most customers assigned?,"SELECT Employee.FirstName, Employee.LastName, COUNT(Customer.CustomerId) AS total FROM Employee JOIN Customer ON Employee.EmployeeId = Customer.SupportRepId GROUP BY Employee.EmployeeId ORDER BY total DESC LIMIT 1"
+List all tracks composed by Angus Young.,SELECT Name FROM Track WHERE Composer = 'Angus Young'
+Show the total sales per country.,"SELECT BillingCountry, SUM(Total) AS total_sales FROM Invoice GROUP BY BillingCountry ORDER BY total_sales DESC"
+How many invoices were made in each year?,"SELECT strftime('%Y', InvoiceDate) AS year, COUNT(*) AS total FROM Invoice GROUP BY year"
+Find customers who spent more than 40 dollars in total.,"SELECT Customer.FirstName, Customer.LastName, SUM(Invoice.Total) AS total_spent FROM Customer JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId GROUP BY Customer.CustomerId HAVING total_spent > 40"
+List tracks that cost more than 1 dollar.,"SELECT Name, UnitPrice FROM Track WHERE UnitPrice > 1"
+Show albums that have more than 10 tracks.,"SELECT Album.Title, COUNT(Track.TrackId) AS track_count FROM Album JOIN Track ON Album.AlbumId = Track.AlbumId GROUP BY Album.AlbumId HAVING track_count > 10"
+List all artists who have more than 5 albums.,"SELECT Artist.Name, COUNT(Album.AlbumId) AS album_count FROM Artist JOIN Album ON Artist.ArtistId = Album.ArtistId GROUP BY Artist.ArtistId HAVING album_count > 5"
+What are the unique billing countries in invoices?,SELECT DISTINCT BillingCountry FROM Invoice ORDER BY BillingCountry
+Show the top 10 customers by total spending.,"SELECT Customer.FirstName, Customer.LastName, SUM(Invoice.Total) AS total_spent FROM Customer JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId GROUP BY Customer.CustomerId ORDER BY total_spent DESC LIMIT 10"
+Find all tracks that have never been sold.,SELECT Track.Name FROM Track WHERE Track.TrackId NOT IN (SELECT TrackId FROM InvoiceLine)
+What is the most popular genre by number of tracks sold?,"SELECT Genre.Name, COUNT(InvoiceLine.TrackId) AS total_sold FROM InvoiceLine JOIN Track ON InvoiceLine.TrackId = Track.TrackId JOIN Genre ON Track.GenreId = Genre.GenreId GROUP BY Genre.Name ORDER BY total_sold DESC LIMIT 1"
+Show the total revenue per genre.,"SELECT Genre.Name, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) AS revenue FROM InvoiceLine JOIN Track ON InvoiceLine.TrackId = Track.TrackId JOIN Genre ON Track.GenreId = Genre.GenreId GROUP BY Genre.Name ORDER BY revenue DESC"
+List all tracks from the album Nevermind.,"SELECT Track.Name FROM Track JOIN Album ON Track.AlbumId = Album.AlbumId WHERE Album.Title = 'Nevermind'"
+Which artist has the most tracks?,"SELECT Artist.Name, COUNT(Track.TrackId) AS total_tracks FROM Artist JOIN Album ON Artist.ArtistId = Album.ArtistId JOIN Track ON Album.AlbumId = Track.AlbumId GROUP BY Artist.ArtistId ORDER BY total_tracks DESC LIMIT 1"
+Show all customers in alphabetical order by last name.,"SELECT FirstName, LastName FROM Customer ORDER BY LastName ASC"
+List all employees hired after the year 2003.,"SELECT FirstName, LastName, HireDate FROM Employee WHERE strftime('%Y', HireDate) > '2003'"
+What is the average track length in minutes?,SELECT AVG(Milliseconds) / 60000.0 AS avg_length_minutes FROM Track
+Which album has the most tracks?,"SELECT Album.Title, COUNT(Track.TrackId) AS track_count FROM Album JOIN Track ON Album.AlbumId = Track.AlbumId GROUP BY Album.AlbumId ORDER BY track_count DESC LIMIT 1"
+Show all invoice line items for invoice ID 1.,SELECT * FROM InvoiceLine WHERE InvoiceId = 1
+List all tracks available in MP3 format.,"SELECT Track.Name FROM Track JOIN MediaType ON Track.MediaTypeId = MediaType.MediaTypeId WHERE MediaType.Name = 'MPEG audio file'"

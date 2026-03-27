@@ -1,0 +1,4 @@
+method,total_queries,successful,execution_accuracy,avg_latency,median_latency,p95_latency,execution_accuracy_pct,exact_match_rate
+baseline,50,0,0.0,3.66,2.99,6.41,0.0,0.0
+improved,50,46,0.92,6.13,6.16,11.69,92.0,14.0
+improved+retry,50,50,1.0,8.52,6.34,21.63,100.0,6.0
